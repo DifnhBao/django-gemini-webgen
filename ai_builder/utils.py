@@ -165,23 +165,43 @@ def generate_website_with_gemini(topic: str) -> str:
         raise ValueError('GEMINI_API_KEY is not configured in Django settings.')
 
 
+#     prompt = (
+#     f"Act as an expert Frontend Developer. Generate a modern, beautiful, and fully responsive single-page mini website for the topic '{topic}'.\n\n"
+#     "STRICT RULES:\n"
+#     "1. Return ONLY the raw HTML code. Do NOT include any markdown formatting (like ```html), explanations, or extra prose.\n"
+#     "2. Use Tailwind CSS via CDN (<script src=\"[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)\"></script>) for all styling. Do not write raw CSS unless absolutely necessary.\n"
+#     "3. TYPOGRAPHY & ICONS: Embed the 'Inter' font from Google Fonts and apply it to the body. Include the FontAwesome CDN (<link rel=\"stylesheet\" href=\"[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)\">) and use appropriate icons throughout the UI.\n"
+#     "4. The UI must be modern: use flexbox/grid, explicit responsive prefixes (sm:, md:, lg:), hover effects, rounded corners, soft shadows, and look great on both mobile and desktop.\n"
+#     "5. Use Semantic HTML5 tags (<nav>, <header>, <main>, <section>, <footer>) instead of just <div> containers.\n"
+#     "6. AUTHENTICATED STATE: The header/navbar MUST display a realistic logged-in user state. It must include a user avatar icon, strictly use the Django template tag 'Xin chào, {{ user.username }}', and include a 'Đăng xuất' (Logout) button.\n"
+#     "7. The website content and UI text MUST be in Vietnamese.\n"
+#     "8. Include embedded JavaScript at the end of the body to make the UI interactive (e.g., handling form submissions with simple alerts, mobile menu toggling, or tabs).\n"
+#     f"9. DOMAIN SPECIFIC & MOCK DATA: Design UI components AND populate them with realistic mock data based on the topic '{topic}'. For example, if it's 'đặt vé máy bay', you MUST include a search form AND a section displaying mock flight tickets with prices, times, and 'Book' buttons. Make it look like a fully functioning system.\n"
+#     "10. REALISTIC IMAGES: You MUST include relevant image placeholders to make the UI look complete.\n"
+#     "   - Use LoremFlickr: [https://loremflickr.com/](https://loremflickr.com/)<width>/<height>/<english_keyword1>,<english_keyword2>\n"
+#     "   - Generate specific, relevant English keywords for each `<img>` tag to get diverse images. For example, if the topic is 'booking homestay', use keywords like 'bedroom,interior' for one image, and 'resort,nature' for another.\n"
+#     "   - Ensure all images have responsive Tailwind classes (e.g., w-full, object-cover, rounded-lg) and meaningful Vietnamese `alt` attributes."
+# )
+
     prompt = (
-    f"Act as an expert Frontend Developer. Generate a modern, beautiful, and fully responsive single-page mini website for the topic '{topic}'.\n\n"
-    "STRICT RULES:\n"
-    "1. Return ONLY the raw HTML code. Do NOT include any markdown formatting (like ```html), explanations, or extra prose.\n"
-    "2. Use Tailwind CSS via CDN (<script src=\"[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)\"></script>) for all styling. Do not write raw CSS unless absolutely necessary.\n"
-    "3. TYPOGRAPHY & ICONS: Embed the 'Inter' font from Google Fonts and apply it to the body. Include the FontAwesome CDN (<link rel=\"stylesheet\" href=\"[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)\">) and use appropriate icons throughout the UI.\n"
-    "4. The UI must be modern: use flexbox/grid, explicit responsive prefixes (sm:, md:, lg:), hover effects, rounded corners, soft shadows, and look great on both mobile and desktop.\n"
-    "5. Use Semantic HTML5 tags (<nav>, <header>, <main>, <section>, <footer>) instead of just <div> containers.\n"
-    "6. AUTHENTICATED STATE: The header/navbar MUST display a realistic logged-in user state. It must include a user avatar icon, strictly use the Django template tag 'Xin chào {{ user.username }}', and include a 'Đăng xuất' (Logout) button.\n"
-    "7. The website content and UI text MUST be in Vietnamese.\n"
-    "8. Include embedded JavaScript at the end of the body to make the UI interactive (e.g., handling form submissions with simple alerts, mobile menu toggling, or tabs).\n"
-    f"9. DOMAIN SPECIFIC & MOCK DATA: Design UI components AND populate them with realistic mock data based on the topic '{topic}'. For example, if it's 'đặt vé máy bay', you MUST include a search form AND a section displaying mock flight tickets with prices, times, and 'Book' buttons. Make it look like a fully functioning system.\n"
-    "10. REALISTIC IMAGES: You MUST include relevant image placeholders to make the UI look complete.\n"
-    "   - Use LoremFlickr: [https://loremflickr.com/](https://loremflickr.com/)<width>/<height>/<english_keyword1>,<english_keyword2>\n"
-    "   - Generate specific, relevant English keywords for each `<img>` tag to get diverse images. For example, if the topic is 'booking homestay', use keywords like 'bedroom,interior' for one image, and 'resort,nature' for another.\n"
-    "   - Ensure all images have responsive Tailwind classes (e.g., w-full, object-cover, rounded-lg) and meaningful Vietnamese `alt` attributes."
-)
+        f"Act as an expert Full-Stack Developer. Generate a modern, beautiful, and fully responsive single-page web application for the topic '{topic}'.\n\n"
+        "STRICT RULES:\n"
+        "1. Return ONLY the raw HTML code. Do NOT include any markdown formatting (like ```html), explanations, or extra prose.\n"
+        "2. Use Tailwind CSS via CDN (<script src=\"[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)\"></script>) for all styling. Do not write raw CSS unless absolutely necessary.\n"
+        "3. TYPOGRAPHY & ICONS: Embed the 'Inter' font from Google Fonts and apply it to the body. Include the FontAwesome CDN (<link rel=\"stylesheet\" href=\"[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)\">) and use appropriate icons throughout the UI.\n"
+        "4. The UI must be modern: use flexbox/grid, explicit responsive prefixes (sm:, md:, lg:), hover effects, rounded corners, soft shadows, and look great on both mobile and desktop.\n"
+        "5. Use Semantic HTML5 tags (<nav>, <header>, <main>, <section>, <footer>) instead of just <div> containers.\n"
+        "6. AUTHENTICATED STATE: The header/navbar MUST display a realistic logged-in user state. It must include a user avatar icon, strictly use the Django template tag 'Xin chào, {{ user.username }}'\n"
+        "7. The website content and UI text MUST be in Vietnamese.\n"
+        "8. ADVANCED FUNCTIONAL JAVASCRIPT: DO NOT just use simple alerts. You MUST write complete, working JavaScript logic for the core feature of the topic.\n"
+        "   - If the topic is a GAME (e.g., 'Cờ caro', 'Snake'): Write the full playable game logic, state management, and win/loss conditions.\n"
+        "   - If the topic is a TOOL (e.g., 'Calculator', 'To-Do List'): Implement fully working CRUD operations or calculations.\n"
+        "   - Only use alerts for critical errors, not for standard user flows.\n"
+        f"9. ADAPTIVE DOMAIN DESIGN: Analyze the topic '{topic}' to determine the layout type:\n"
+        "   - If it's a CONTENT/SERVICE site (e.g., 'đặt vé máy bay'): Design a landing page layout and populate it with realistic mock data (e.g., flight cards with prices).\n"
+        "   - If it's an APP or GAME (e.g., 'Cờ caro'): Prioritize the main workspace/gameboard in the center of the screen, focusing on interactive elements rather than generic landing page sections.\n"
+        "10. REALISTIC IMAGES: Only if appropriate for the topic, include relevant image placeholders ([https://loremflickr.com/](https://loremflickr.com/)<width>/<height>/<keyword1>,<keyword2>). Use specific English keywords. Do not force images into games or tools where they don't belong."
+    )
 
     response = _call_gemini(prompt, api_key)
     return _normalize_response_text(response)
