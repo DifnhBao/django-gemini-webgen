@@ -17,7 +17,7 @@ GOOGLE_GEMINI_API_KEY=your_api_key_here
 
 ---
 
-## Cách 1 – Docker Compose (khuyên dùng)
+## Chạy hệ thống bằng Docker Compose 
 
 Không cần cài Python hay thư viện, Docker lo hết.
 
@@ -31,40 +31,8 @@ docker compose up -d --build
 
 Truy cập tại: **http://localhost:8000**
 
-**Một số lệnh hữu ích:**
-
-```bash
-docker compose logs -f                # Xem log realtime
-docker compose down                   # Dừng tất cả
-docker compose run --rm web python manage.py createsuperuser  # Tạo admin
-```
 
 > Lưu ý: Hệ thống đã tích hợp sẵn một service `cron` chạy ngầm. Service này sẽ tự động dọn dẹp các website đã bị xóa quá 7 ngày, mỗi 24 giờ một lần.
-
----
-
-## Cách 2 – Chạy thủ công (local)
-
-Yêu cầu: **Python 3.10+**
-
-```bash
-# 1. Tạo và kích hoạt môi trường ảo
-python -m venv .venv
-
-source .venv/bin/activate       # Linux/macOS
-.venv\Scripts\activate          # Windows
-
-# 2. Cài thư viện
-pip install -r requirements.txt
-
-# 3. Chạy migration
-python manage.py migrate
-
-# 4. Khởi động server
-python manage.py runserver
-```
-
-Truy cập tại: **http://127.0.0.1:8000**
 
 ---
 
