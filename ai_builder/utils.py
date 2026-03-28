@@ -164,15 +164,24 @@ def generate_website_with_gemini(topic: str) -> str:
     if not api_key:
         raise ValueError('GEMINI_API_KEY is not configured in Django settings.')
 
+
     prompt = (
-        f"Generate a complete mini website in raw HTML/CSS/JS only for the topic '{topic}'. "
-        "Do not include any markdown, explanation, or extra prose. "
-        "The output must be plain HTML, CSS, and JavaScript code only. "
-        "Include a welcoming greeting that uses the Django template tag {{ user.username }} in the HTML output. "
-        "Design a UI for the requested topic. For example, if the topic is 'flight booking', include a ticket pricing search form. "
-        "Use inline or embedded CSS and JavaScript as needed for a functional mini website. "
-        "Return only the raw page content, not JSON or markdown wrappers."
-    )
+    f"Act as an expert Frontend Developer. Generate a modern, beautiful, and fully responsive single-page mini website for the topic '{topic}'.\n\n"
+    "STRICT RULES:\n"
+    "1. Return ONLY the raw HTML code. Do NOT include any markdown formatting (like ```html), explanations, or extra prose.\n"
+    "2. Use Tailwind CSS via CDN (<script src=\"[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)\"></script>) for all styling. Do not write raw CSS unless absolutely necessary.\n"
+    "3. TYPOGRAPHY & ICONS: Embed the 'Inter' font from Google Fonts and apply it to the body. Include the FontAwesome CDN (<link rel=\"stylesheet\" href=\"[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)\">) and use appropriate icons throughout the UI.\n"
+    "4. The UI must be modern: use flexbox/grid, explicit responsive prefixes (sm:, md:, lg:), hover effects, rounded corners, soft shadows, and look great on both mobile and desktop.\n"
+    "5. Use Semantic HTML5 tags (<nav>, <header>, <main>, <section>, <footer>) instead of just <div> containers.\n"
+    "6. AUTHENTICATED STATE: The header/navbar MUST display a realistic logged-in user state. It must include a user avatar icon, strictly use the Django template tag 'Xin chào {{ user.username }}', and include a 'Đăng xuất' (Logout) button.\n"
+    "7. The website content and UI text MUST be in Vietnamese.\n"
+    "8. Include embedded JavaScript at the end of the body to make the UI interactive (e.g., handling form submissions with simple alerts, mobile menu toggling, or tabs).\n"
+    f"9. DOMAIN SPECIFIC & MOCK DATA: Design UI components AND populate them with realistic mock data based on the topic '{topic}'. For example, if it's 'đặt vé máy bay', you MUST include a search form AND a section displaying mock flight tickets with prices, times, and 'Book' buttons. Make it look like a fully functioning system.\n"
+    "10. REALISTIC IMAGES: You MUST include relevant image placeholders to make the UI look complete.\n"
+    "   - Use LoremFlickr: [https://loremflickr.com/](https://loremflickr.com/)<width>/<height>/<english_keyword1>,<english_keyword2>\n"
+    "   - Generate specific, relevant English keywords for each `<img>` tag to get diverse images. For example, if the topic is 'booking homestay', use keywords like 'bedroom,interior' for one image, and 'resort,nature' for another.\n"
+    "   - Ensure all images have responsive Tailwind classes (e.g., w-full, object-cover, rounded-lg) and meaningful Vietnamese `alt` attributes."
+)
 
     response = _call_gemini(prompt, api_key)
     return _normalize_response_text(response)
