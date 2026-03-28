@@ -1,0 +1,5 @@
+django>=4.2
+google-genai
+python-dotenv
+gunicorn
+# psycopg2-binary  # add this only if you use PostgreSQL

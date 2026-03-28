@@ -1,0 +1,30 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=core.settings
+
+  cron:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=core.settings
+    command: >
+      sh -c "while true; do
+        echo 'Bat dau don dep thung rac luc:' $$(date);
+        python manage.py cleanup_trash;
+        echo 'Hoan tat! Cho 24 gio cho lan don dep tiep theo...';
+        sleep 86400;
+      done"

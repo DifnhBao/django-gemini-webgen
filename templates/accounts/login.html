@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block title %}Login{% endblock %} {% block content%}
+<style>
+  /* Tái sử dụng CSS để đồng bộ giao diện các ô input */
+  .django-form input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.25rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.375rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .django-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb;
+  }
+</style>
+
+<div class="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+  <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-md -mt-64">
+    <h1 class="mb-6 text-center text-2xl font-bold text-slate-800">Login</h1>
+
+    <form method="post" class="django-form space-y-5">
+      {% csrf_token %} {% if form.non_field_errors %}
+      <div class="text-sm text-red-600 mb-4 text-center font-medium">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Username</label>
+        {{ form.username }}
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Password</label>
+        {{ form.password }}
+      </div>
+
+      <button
+        type="submit"
+        class="mt-4 w-full rounded bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700 transition-colors"
+      >
+        Login
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-600">
+      Chưa có tài khoản?
+      <a
+        href="{% url 'accounts:signup' %}"
+        class="font-semibold text-blue-600 hover:underline"
+        >Đăng ký</a
+      >
+    </p>
+  </div>
+</div>
+{% endblock %}

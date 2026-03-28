@@ -1,0 +1,111 @@
+{% extends 'base.html' %} {% block title %}AI Website Builder
+Dashboard{%endblock %} {% block content %}
+<div class="rounded-xl bg-white p-8 shadow-sm">
+  <h1 class="text-3xl font-semibold mb-6">Create a Mini Website AI</h1>
+
+  <form id="topic-form" method="post" class="space-y-6">
+    {% csrf_token %}
+
+    <div>
+      <label for="topic" class="block text-sm font-medium text-slate-700 mb-2"
+        >Website Topic</label
+      >
+      <input
+        id="topic"
+        type="text"
+        name="topic"
+        value="{{ topic }}"
+        required
+        class="w-full rounded-lg border border-slate-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        placeholder="e.g. Flight Booking"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <button
+        id="submit-button"
+        type="submit"
+        class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Generate Website
+      </button>
+
+      <div
+        id="loading-state"
+        class="hidden items-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-slate-700"
+      >
+        <span
+          class="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent"
+        ></span>
+        <span>Generating website, please wait...</span>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% if generated_websites %}
+<div class="mt-8 rounded-xl bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-semibold mb-4">Danh sách website đã tạo</h2>
+  <div class="space-y-4">
+    {% for website in generated_websites %}
+    <div class="rounded-xl border border-slate-200 p-4">
+      <div
+        class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div>
+          <div class="text-lg font-semibold">{{ website.topic }}</div>
+          <div class="text-sm text-slate-500">
+            Tạo lúc: {{ website.created_at|date:"SHORT_DATETIME_FORMAT" }}
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a
+            href="{% url 'ai_builder:render_website' website.id %}"
+            class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >Xem website</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <form action="{% url 'ai_builder:delete_website' website.id %}" method="post" class="inline-block">
+      {% csrf_token %}
+      <button type="submit" 
+              onclick="return confirm('Bạn có chắc chắn muốn xóa website này không?');"
+              class="rounded bg-red-50 px-3 py-1 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors">
+          Xóa
+      </button>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="mt-8 rounded-xl bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-semibold mb-2">Danh sách website đã tạo</h2>
+  <p class="text-sm text-slate-500">
+    Bạn chưa tạo website nào. Hãy nhập chủ đề và nhấn Generate.
+  </p>
+</div>
+{% endif %}
+
+<script>
+  const form = document.getElementById("topic-form");
+  const submitButton = document.getElementById("submit-button");
+  const loadingState = document.getElementById("loading-state");
+
+  form.addEventListener("submit", (event) => {
+    if (!form.checkValidity()) {
+      return; 
+    }
+
+    setTimeout(() => {
+      submitButton.disabled = true;
+      submitButton.classList.add("opacity-50", "cursor-not-allowed");
+      submitButton.innerText = "Processing...";
+
+      loadingState.classList.remove("hidden");
+      loadingState.classList.add("flex");
+    }, 10);
+  });
+</script>
+{% endblock %}
